@@ -11,7 +11,7 @@ namespace EntityRelations_EstudyOne.Persistence
     {
 
 
-        public DbSet <User> Users { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Project> Projects { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
@@ -27,10 +27,13 @@ namespace EntityRelations_EstudyOne.Persistence
             builder.Entity<User>().Property(p => p.FirstName).IsRequired().HasMaxLength(20);
             builder.Entity<User>().Property(p => p.Password).IsRequired();
             builder.Entity<User>().Property(p => p.LastName).IsRequired().HasMaxLength(20);
+            builder.Entity<User>().Property(p => p.Role).IsRequired();
+            builder.Entity<User>().Property(p => p.Username).IsRequired().HasMaxLength(10);
 
             builder.Entity<User>().HasData
             (
-                new User { Id = 01 ,FirstName = "Joel", LastName = "Suarez", Password = "admin" } 
+                new User { Id = 01 ,FirstName = "Joel", LastName = "Suarez", Username = "joel01", Password = "admin", Role = Role.Admin }, 
+                new User { Id = 02 ,FirstName = "Gustavo", LastName = "Suarez", Username = "gustav01", Password = "user", Role = Role.User } 
             );
 
             builder.Entity<Project>().ToTable("Projects");
